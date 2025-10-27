@@ -1,4 +1,4 @@
-export type TUser = {
+interface IUser {
   name: string;
   email: string;
-};
+}
