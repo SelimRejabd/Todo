@@ -1,19 +1,17 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { ErrorRequestHandler, NextFunction, Request, Response } from "express";
-import { ZodError, ZodIssue } from "zod";
-import { TErrorSources } from "../interface/error";
-import { config } from "../../config";
+import { ErrorRequestHandler } from "express";
+import { ZodError } from "zod";
 import handleZodError from "../errors/handleZodError";
 import handleValidationError from "../errors/handleValidationError";
 import handleCastError from "../errors/handleCastError";
 import handleDuplicateError from "../errors/handleDuplicateError";
-import handleForbiddenError from "../errors/handleForbiddenError";
 import AppError from "../errors/AppError";
+import { config } from "../config";
 
 const globalErrorHandler: ErrorRequestHandler = (error, req, res, next) => {
   let statusCode = error.statusCode || 500;
   let message = error.message || "Somthing went wrong.";
+
+  type TErrorSources = { path: string; message: string }[];
 
   let errorSources: TErrorSources = [
     {
@@ -27,11 +25,6 @@ const globalErrorHandler: ErrorRequestHandler = (error, req, res, next) => {
     statusCode = simplifiedError.statusCode;
     message = simplifiedError.message;
     errorSources = simplifiedError.errorSources;
-  } else if (error instanceof ForbiddenError) {
-    const simplified = handleForbiddenError(error);
-    statusCode = simplified.statusCode;
-    message = simplified.message;
-    errorSources = simplified.errorSources;
   } else if (error.name === "ValidationError") {
     const simplifiedError = handleValidationError(error);
     statusCode = simplifiedError?.statusCode;
@@ -60,7 +53,7 @@ const globalErrorHandler: ErrorRequestHandler = (error, req, res, next) => {
     success: false,
     message: message,
     errorSources: errorSources,
-    stack: config.node_env === "development" ? error?.stack : null,
+    stack: config?.node_env === "development" ? error?.stack : null,
     error: error,
   });
 };
