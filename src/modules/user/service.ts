@@ -1,8 +1,8 @@
 import AppError from "../../errors/AppError";
 import { User } from "./model";
-import { TUser } from "./type";
 
-const create = async (userData: TUser) => {
+
+const create = async (userData: IUser) => {
   const data = await User.create(userData);
   if (!data) {
     throw new AppError("Failed to create user", 500);
