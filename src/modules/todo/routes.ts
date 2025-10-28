@@ -9,6 +9,9 @@ router
   .route("/")
   .post(validateRequest(TodoValidation.create), TodoController.create)
   .get(TodoController.getAll);
-router.route("/:id").get(TodoController.getById);
+router
+  .route("/:id")
+  .get(TodoController.getById)
+  .patch(validateRequest(TodoValidation.update), TodoController.update);
 
 export const TodoRoutes = router;
