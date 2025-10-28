@@ -26,7 +26,7 @@ const getAll = catchAsync(async (req, res) => {
 const getById = catchAsync(async (req, res) => {
   const { id } = req.params;
   const data = await TodoService.getById(id);
-  
+
   apiResponse(res, {
     statusCode: 200,
     success: true,
@@ -34,8 +34,23 @@ const getById = catchAsync(async (req, res) => {
     data,
   });
 });
+
+const update = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  console.log(req.body);
+  const data = await TodoService.update(id, req.body);
+
+  apiResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: "Todo updated successfully",
+    data,
+  });
+});
+
 export const TodoController = {
   create,
   getAll,
   getById,
+  update,
 };
