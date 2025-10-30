@@ -48,9 +48,22 @@ const update = catchAsync(async (req, res) => {
   });
 });
 
+const deleteTodo = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  await TodoService.deleteTodo(id);
+
+  apiResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: "Todo deleted successfully",
+    data: null,
+  });
+});
+
 export const TodoController = {
   create,
   getAll,
   getById,
   update,
+  deleteTodo,
 };

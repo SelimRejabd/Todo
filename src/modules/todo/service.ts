@@ -26,7 +26,10 @@ const getById = async (id: string) => {
   return todo;
 };
 
-const update = async (id: string, updateData: Partial<ITodo>): Promise<ITodoDoc> => {
+const update = async (
+  id: string,
+  updateData: Partial<ITodo>
+): Promise<ITodoDoc> => {
   const todo = await Todo.findByIdAndUpdate(id, updateData, { new: true });
   if (!todo) {
     throw new AppError("Todo not found", 404);
@@ -34,10 +37,18 @@ const update = async (id: string, updateData: Partial<ITodo>): Promise<ITodoDoc>
   return todo;
 };
 
+const deleteTodo = async (id: string) => {
+  const result = await Todo.findByIdAndDelete(id);
+  if (!result) {
+    throw new AppError("Todo not found", 404);
+  }
+  return result;
+};
 
 export const TodoService = {
   create,
   getAll,
   getById,
   update,
+  deleteTodo,
 };
