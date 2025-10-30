@@ -12,6 +12,7 @@ router
 router
   .route("/:id")
   .get(TodoController.getById)
-  .patch(validateRequest(TodoValidation.update), TodoController.update);
+  .patch(validateRequest(TodoValidation.update), TodoController.update)
+  .delete(TodoController.deleteTodo);
 
 export const TodoRoutes = router;
