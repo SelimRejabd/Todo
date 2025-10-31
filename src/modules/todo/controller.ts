@@ -37,7 +37,6 @@ const getById = catchAsync(async (req, res) => {
 
 const update = catchAsync(async (req, res) => {
   const { id } = req.params;
-  console.log(req.body);
   const data = await TodoService.update(id, req.body);
 
   apiResponse(res, {

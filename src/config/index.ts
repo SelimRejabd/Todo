@@ -15,4 +15,14 @@ export const config = {
   port: parseInt(getEnv("PORT", false, "5000")),
   database_url: getEnv("MONGO_URI"),
   node_env: getEnv("NODE_ENV", false, "development"),
+  local_frontend_url: getEnv(
+    "LOCAL_FRONTEND_URL",
+    false,
+    "http://localhost:3000"
+  ),
+  prod_frontend_url: getEnv(
+    "PROD_FRONTEND_URL",
+    false,
+    "https://your-production-domain.com"
+  ),
 };
